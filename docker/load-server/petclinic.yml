@@ -1,0 +1,19 @@
+config:
+  target: 'http://api-gateway:8080'
+  phases:
+    - duration: 5
+      arrivalCount: 5
+scenarios:
+  - flow:
+    - loop:
+      - get:
+          url: "/"
+      - think: 1
+      - get:
+          url: "/api/customer/owners"
+          capture:
+            json: "$[*].id"
+            as: "id"
+      - think: 1
+      - get:
+          url: "/api/gateway/owners/{{ id }}"
