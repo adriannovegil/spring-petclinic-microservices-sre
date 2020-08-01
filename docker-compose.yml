@@ -88,36 +88,6 @@ services:
     ports:
      - 9090:9090
 
-  # Circuit breaker
-  # ============================================================================
-  hystrix-dashboard:
-    image: springcommunity/spring-petclinic-hystrix-dashboard
-    container_name: hystrix-dashboard
-    depends_on:
-     - config-server
-     - discovery-server
-    entrypoint: ["./dockerize","-wait=tcp://discovery-server:8761","-timeout=60s","--","java", "-XX:+UnlockExperimentalVMOptions", "-XX:+UseCGroupMemoryLimitForHeap", "-Djava.security.egd=file:/dev/./urandom","-jar","/app.jar"]
-    ports:
-     - 7979:7979
-
-  # Metrics
-  # ============================================================================
-  # Grafana
-  grafana-server:
-    build: ./docker/grafana
-    image: springcommunity/grafana
-    container_name: grafana-server
-    ports:
-    - 3000:3000
-
-  # Prometheus server
-  prometheus-server:
-    build: ./docker/prometheus
-    image: springcommunity/prometheus
-    container_name: prometheus-server
-    ports:
-    - 9091:9090
-
   # Load
   # ============================================================================
   # Load server
