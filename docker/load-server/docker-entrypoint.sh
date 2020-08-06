@@ -6,4 +6,6 @@ until $(curl --output /dev/null --silent --fail http://api-gateway:8080); do
   sleep 10
 done
 
-exec artillery "$@"
+sleep 30
+
+while true; do artillery "$@"; done
