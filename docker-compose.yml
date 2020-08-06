@@ -15,7 +15,7 @@ services:
     image: springcommunity/spring-petclinic-discovery-server
     container_name: discovery-server
     depends_on:
-      - config-server    
+      - config-server
     entrypoint: ["./dockerize","-wait=tcp://config-server:8888","-timeout=60s","--","java", "org.springframework.boot.loader.JarLauncher"]
     ports:
      - 8761:8761
@@ -65,16 +65,6 @@ services:
     entrypoint: ["./dockerize","-wait=tcp://discovery-server:8761","-timeout=60s","--","java", "org.springframework.boot.loader.JarLauncher"]
     ports:
      - 8080:8080
-
-  # Tracing
-  # ============================================================================
-  tracing-server:
-    image: openzipkin/zipkin
-    container_name: tracing-server
-    environment:
-    - JAVA_OPTS=-XX:+UnlockExperimentalVMOptions -Djava.security.egd=file:/dev/./urandom
-    ports:
-     - 9411:9411
 
   # Admin Server
   # ============================================================================
