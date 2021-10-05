@@ -1,18 +1,145 @@
+######################
+# Project Specific
+######################
+
+######################
+# Node
+######################
+/node/
+node_tmp/
+node_modules/
+npm-debug.log.*
+/.awcache/*
+/.cache-loader/*
+
+######################
+# SASS
+######################
+.sass-cache/
+
+######################
+# Eclipse
+######################
+*.pydevproject
+.project
+.metadata
+tmp/
+tmp/**/*
+*.tmp
+*.bak
+*.swp
+*~.nib
+local.properties
+.classpath
+.settings/
+.loadpath
+.factorypath
+/src/main/resources/rebel.xml
+
+# External tool builders
+.externalToolBuilders/**
+
+# Locally stored "Eclipse launch configurations"
+*.launch
+
+# CDT-specific
+.cproject
+
+# PDT-specific
+.buildpath
+
+# STS-specific
+/.sts4-cache/*
+
+######################
+# IntelliJ
+######################
+.idea/
+*.iml
+*.iws
+*.ipr
+*.ids
+*.orig
+classes/
+out/
+
+######################
+# Visual Studio Code
+######################
+.vscode/
+
+######################
 # Maven
-target/
+######################
+/log/
+/target/
+
+######################
+# Gradle Wrapper
+######################
+!gradle/wrapper/gradle-wrapper.jar
+
+######################
+# Gradle
+######################
+.gradle/
+/build/
+
+######################
+# Maven Wrapper
+######################
 !.mvn/wrapper/maven-wrapper.jar
 
-# Jenv
-.java-version
+######################
+# Package Files
+######################
+*.jar
+*.war
+*.ear
+*.db
 
-# Eclipse
-.settings/
-.classpath
-.project
+######################
+# Windows
+######################
+# Windows image file caches
+Thumbs.db
 
-# IntelliJ IDEA
-.idea
-*.iml
+# Folder config file
+Desktop.ini
 
-# Branch switching
-generated/
+######################
+# Mac OSX
+######################
+.DS_Store
+.svn
+
+# Thumbnails
+._*
+
+# Files that might appear on external disk
+.Spotlight-V100
+.Trashes
+
+######################
+# Directories
+######################
+/bin/
+/deploy/
+
+######################
+# Logs
+######################
+*.log*
+
+######################
+# Others
+######################
+*.class
+*.*~
+*~
+.merge_file*
+
+######################
+# ESLint
+######################
+.eslintcache
