@@ -2,35 +2,39 @@
 # Makefile to manage the containers.
 # Author: Adrian Novegil <adrian.novegil@gmail.com>
 #
-.DEFAULT_GOAL:=help
+#COLORS
+GREEN  := $(shell tput -Txterm setaf 2)
+WHITE  := $(shell tput -Txterm setaf 7)
+YELLOW := $(shell tput -Txterm setaf 3)
+RED := $(shell tput -Txterm setaf 1)
+RESET  := $(shell tput -Txterm sgr0)
+
+# Add the following 'help' target to your Makefile
+# And add help text after each target name starting with '\#\#'
+# A category can be added with @category
+HELP_FUN = \
+    %help; \
+    while(<>) { push @{$$help{$$2 // 'options'}}, [$$1, $$3] if /^([a-zA-Z\-]+)\s*:.*\#\#(?:@([a-zA-Z\-]+))?\s(.*)$$/ }; \
+    print "usage: make [target]\n\n"; \
+    for (sort keys %help) { \
+    print "${WHITE}$$_:${RESET}\n"; \
+    for (@{$$help{$$_}}) { \
+    $$sep = " " x (32 - length $$_->[0]); \
+    print "  ${YELLOW}$$_->[0]${RESET}$$sep${GREEN}$$_->[1]${RESET}\n"; \
+    }; \
+    print "\n"; }
 
 PROJECT_NAME=spring-petclinic-microservices
-DOCKER_NETWORK=observabilitysandbox
 COMPOSE_COMMAND=docker-compose --project-name=$(PROJECT_NAME)
+DOCKER_NETWORK=observabilitysandbox
 
-# show some help
-help:
-	@echo ''
-	@echo '  Usage:'
-	@echo '    make <target>'
-	@echo ''
-	@echo '  Targets:'
-	@echo '    help                  This information'
-	@echo ''
-	@echo '  Common Targets:'
-	@echo '    create-network        Crea la red de Docker para los contenedores'
-	@echo '    build                 Construye todas las imágenes a partir de los Dockerfiles'
-	@echo '    run                   Arranca todos los contenedores necesarios para ejecutar el sistema'
-	@echo '    up                    build + run'
-	@echo '    stop                  Para los contenedores'
-	@echo '    down                  Elimina los contenedores'
-	@echo '    restart               stop + run'
-	@echo '    status                Recupera el estado de los contenedores'
-	@echo ''
-	@echo '  Clean Targets:'
-	@echo '    clean-network         Borra la red Docker'
-	@echo '    clean-images          Borra las imágenes creadas'
-	@echo ''
+.DEFAULT_GOAL:=help
+
+help: ##@other Show this help.
+	@perl -e '$(HELP_FUN)' $(MAKEFILE_LIST)
+
+confirm:
+	@( read -p "$(RED)Are you sure? [y/N]$(RESET): " sure && case "$$sure" in [yY]) true;; *) false;; esac )
 
 create-network:
 ifeq ($(shell docker network ls | grep ${DOCKER_NETWORK} | wc -l),0)
@@ -38,27 +42,32 @@ ifeq ($(shell docker network ls | grep ${DOCKER_NETWORK} | wc -l),0)
 	@docker network create ${DOCKER_NETWORK}
 endif
 
-build:
-	$(COMPOSE_COMMAND) build
+.PHONY: help build up start stop restart logs status ps down clean
 
-run: create-network
-	$(COMPOSE_COMMAND) up
+build: ## Build the Docker images
+	@$(COMPOSE_COMMAND) build
 
-up: build run
+up: create-network ## Start all or c=<name> containers in foreground
+	@$(COMPOSE_COMMAND) up
 
-stop:
-	$(COMPOSE_COMMAND) stop
+start: create-network ## Start all or c=<name> containers in background
+	@$(COMPOSE_COMMAND) up -d
 
-down:
-	$(COMPOSE_COMMAND) down
+stop: ## Stop all or c=<name> containers
+	@$(COMPOSE_COMMAND) stop
 
-restart: stop run
+restart: stop start ## Restart all or c=<name> containers
 
-status:
-	$(COMPOSE_COMMAND) ps
+logs: ## Show logs for all or c=<name> containers
+	@$(COMPOSE_COMMAND) logs --tail=100
 
-clean-network:
+status: ## Show status of containers
+	@$(COMPOSE_COMMAND) ps
+
+ps: status ## Alias of status
+
+down: confirm ## Clean all data
+	@$(COMPOSE_COMMAND) down
 	@docker network rm ${DOCKER_NETWORK} | true
 
-clean-images:
-	$(COMPOSE_COMMAND) down --rmi local | true
+clean: down ## Alias of down
