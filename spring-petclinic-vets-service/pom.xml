@@ -49,47 +49,59 @@
         </dependency>
 
         <!-- Spring Cloud-->
-  	    <dependency>
-  	        <groupId>org.springframework.cloud</groupId>
-  	        <artifactId>spring-cloud-starter-bootstrap</artifactId>
-  	    </dependency>
-  	    <dependency>
-  	        <groupId>org.springframework.cloud</groupId>
-  	        <artifactId>spring-cloud-starter-config</artifactId>
-  	    </dependency>
-  	    <dependency>
-  	        <groupId>org.springframework.cloud</groupId>
-  	        <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
-  	    </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-bootstrap</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-config</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+        </dependency>
+
+        <!-- Micrometer -->
+        <dependency>
+            <groupId>io.micrometer</groupId>
+            <artifactId>micrometer-registry-prometheus</artifactId>
+            <version>1.7.5</version>
+        </dependency>
+        <dependency>
+            <groupId>io.github.mweirauch</groupId>
+            <artifactId>micrometer-jvm-extras</artifactId>
+            <version>0.2.2</version>
+        </dependency>
 
         <!-- Third parties-->
-  			<dependency>
-    				<groupId>org.projectlombok</groupId>
-    				<artifactId>lombok</artifactId>
-    	      <scope>provided</scope>
-  			</dependency>
-  	    <dependency>
-  	        <groupId>javax.cache</groupId>
-  	        <artifactId>cache-api</artifactId>
-  	    </dependency>
-  	    <dependency>
-  	        <groupId>org.ehcache</groupId>
-  	        <artifactId>ehcache</artifactId>
-  	    </dependency>
-  	    <dependency>
-  	        <groupId>org.jolokia</groupId>
-  	        <artifactId>jolokia-core</artifactId>
-  	    </dependency>
-  			<dependency>
-    				<groupId>org.hsqldb</groupId>
-    				<artifactId>hsqldb</artifactId>
-    				<scope>runtime</scope>
-  			</dependency>
-  			<dependency>
-    				<groupId>mysql</groupId>
-    				<artifactId>mysql-connector-java</artifactId>
-    				<scope>runtime</scope>
-  			</dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>javax.cache</groupId>
+            <artifactId>cache-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.ehcache</groupId>
+            <artifactId>ehcache</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.jolokia</groupId>
+            <artifactId>jolokia-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.hsqldb</groupId>
+            <artifactId>hsqldb</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <scope>runtime</scope>
+        </dependency>
 
         <!-- Testing -->
         <dependency>
