@@ -84,6 +84,12 @@
             <artifactId>spring-cloud-starter-sleuth</artifactId>
         </dependency>
 
+        <!-- Chaos Monkey -->
+        <dependency>
+            <groupId>de.codecentric</groupId>
+            <artifactId>chaos-monkey-spring-boot</artifactId>
+        </dependency>
+
         <!-- Third parties-->
         <dependency>
             <groupId>org.projectlombok</groupId>

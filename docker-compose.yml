@@ -34,12 +34,14 @@ services:
   # Customers service
   customers-service:
     image: springcommunity/spring-petclinic-customers-service
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker,chaos-monkey
     depends_on:
       - config-server
       - discovery-server
     entrypoint: ["./dockerize","-wait=tcp://discovery-server:8761","-timeout=300s","--","java", "org.springframework.boot.loader.JarLauncher"]
-    #ports:
-    #  - 8081:8081
+    ports:
+      - 8081:8081
     networks:
       - observabilitysandbox
     restart: always
@@ -49,12 +51,14 @@ services:
   # Visits service
   visits-service:
     image: springcommunity/spring-petclinic-visits-service
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker,chaos-monkey
     depends_on:
       - config-server
       - discovery-server
     entrypoint: ["./dockerize","-wait=tcp://discovery-server:8761","-timeout=300s","--","java", "org.springframework.boot.loader.JarLauncher"]
-    #ports:
-    #  - 8082:8082
+    ports:
+      - 8082:8082
     networks:
       - observabilitysandbox
     restart: always
@@ -64,12 +68,14 @@ services:
   #Vets service
   vets-service:
     image: springcommunity/spring-petclinic-vets-service
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker,chaos-monkey
     depends_on:
       - config-server
       - discovery-server
     entrypoint: ["./dockerize","-wait=tcp://discovery-server:8761","-timeout=300s","--","java", "org.springframework.boot.loader.JarLauncher"]
-    #ports:
-    #  - 8083:8083
+    ports:
+      - 8083:8083
     networks:
       - observabilitysandbox
     restart: always
@@ -79,6 +85,8 @@ services:
   # API gateway
   api-gateway:
     image: springcommunity/spring-petclinic-api-gateway
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
     depends_on:
       - config-server
       - discovery-server
