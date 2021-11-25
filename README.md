@@ -91,7 +91,6 @@ __Load__
  * https://github.com/spring-petclinic/spring-petclinic-rest
  * https://github.com/gantsign/spring-petclinic-openapi/tree/master/src/main/java/org/springframework/samples/petclinic/web/api
 
-
 ## Contributing
 
 For a complete guide to contributing to the project, see the [Contribution Guide](CONTRIBUTING.md).

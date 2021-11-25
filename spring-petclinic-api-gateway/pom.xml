@@ -86,6 +86,16 @@
             <version>0.2.2</version>
         </dependency>
 
+        <!-- Sleuth - Zipkin -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-sleuth-zipkin</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-sleuth</artifactId>
+        </dependency>
+
         <!-- Third parties -->
         <dependency>
             <groupId>org.jolokia</groupId>
