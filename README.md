@@ -23,7 +23,13 @@ from a project root.
 Once images are ready, you can start them with a single command
 
 ```
-$ docker-compose up
+make up
+```
+
+or, if you prefer
+
+```
+docker-compose up
 ```
 
 After starting services it takes a while for `API Gateway` to be in sync with service registry, so don't be scared of initial Zuul timeouts.
@@ -31,59 +37,44 @@ After starting services it takes a while for `API Gateway` to be in sync with se
 *NOTE: Under MacOSX or Windows, make sure that the Docker VM has enough memory to run the microservices. The default settings
 are usually not enough and make the `docker-compose up` painfully slow.*
 
-## Database configuration
-
-In its default configuration, Petclinic uses an in-memory database (HSQLDB) which gets populated at startup with data.
-
-A similar setup is provided for MySql in case a persistent database configuration is needed.
-
-Dependency for Connector/J, the MySQL JDBC driver is already included in the `pom.xml` files.
-
-### Start a MySql database
-
-You may start a MySql database with docker:
-
-```
-docker run -e MYSQL_ROOT_PASSWORD=petclinic -e MYSQL_DATABASE=petclinic -p 3306:3306 mysql:5.7.8
-```
-
-or download and install the MySQL database (e.g., MySQL Community Server 5.7 GA), which can be found here: https://dev.mysql.com/downloads/
-
-### Use the Spring 'mysql' profile
-
-To use a MySQL database, you have to start 3 microservices (`visits-service`, `customers-service` and `vets-services`) with the `mysql` Spring profile. Add the `--spring.profiles.active=mysql` as programm argument.
-
-By default, at startup, database schema will be created and data will be populated.
-You may also manualy create the PetClinic database and data by executing the `"db/mysql/{schema,data}.sql"` scripts of each 3 microservices.
-In the `application.yml` of the [Configuration repository], set the `initialization-mode` to `never`.
-
-If you are running the microservices with Docker, you have to add the `mysql` profile into the (Dockerfile)[docker/Dockerfile]:
-
-```
-ENV SPRING_PROFILES_ACTIVE docker,mysql
-```
-
-In the `mysql section` of the `application.yml` from the [Configuration repository], you have to change
-the host and port of your MySQL JDBC connection string.
-
 ## Services
 
-If everything goes well, you can access the following services at given location:
+The following services will be started. Some of them are accessible via web:
 
-__Business services__
+| Component                                  | Description                                                 | Port                               |
+| ---------------------------------------    | --------------------------------------------------------    | -------------------------------    |
+| `config-server`                            | Spring config server                                        | [`8888`](http://localhost:8888/)   |
+| `discovery-server`                         | Spring discovery server                                     | [`8761`](http://localhost:8761/)   |
+| `customers-service`                        | Customers service                                           | [`8081`](http://localhost:8081/)   |
+| `visits-service`                           | Visits service                                              | [`8082`](http://localhost:8082/)   |
+| `vets-service`                             | Vets service                                                | [`8083`](http://localhost:8083/)   |
+| `api-gateway`                              | Api Gateway                                                 | [`8080`](http://localhost:8080/)   |
+| `admin-server`                             | Admin server                                                | [`9091`](http://localhost:9091/)   |
+| `load-server`                              | [Load generator based on Artillery](https://artillery.io/)  | N/A                                |
 
-  * AngularJS frontend (API Gateway) - http://localhost:8080
-  * Customers, Vets and Visits Services - random port, check Eureka Dashboard
+## Database configuration
 
-__Infrastructure__
+Check the [database.md](./doc/database.md) file in the [doc](./doc) folder
 
- * Discovery Server - http://localhost:8761
- * Config Server - http://localhost:8888
- * Admin Server (Spring Boot Admin) - http://localhost:9090
+## Load Testing
 
-__Load__
+A JMeter load testing script is available to stress the application and generate metrics: [petclinic_test_plan.jmx](./jmeter/petclinic_test_plan.jmx)
 
- * [Artillery](https://artillery.io/) load generator for the Pet-Clinic. (To ensure that all services are up and running properly.)
+## Metrics
+
+Check the [metrics.md](./doc/metrics.md) file in the [doc](./doc) folder
+
+## Tracing
+
+Check the [tracing.md](./doc/tracing.md) file in the [doc](./doc) folder
+
+## Logs
+
+Check the [logs.md](./doc/logs.md) file in the [doc](./doc) folder
+
+## Chaos
+
+Check the [chaos.md](./doc/chaos.md) file in the [doc](./doc) folder
 
 ## References
 
