@@ -74,8 +74,8 @@ services:
       - config-server
       - discovery-server
     entrypoint: ["./dockerize","-wait=tcp://discovery-server:8761","-timeout=300s","--","java", "org.springframework.boot.loader.JarLauncher"]
-    ports:
-      - 8083:8083
+    #ports:
+    #  - 8083:8083
     networks:
       - observabilitysandbox
     restart: always
