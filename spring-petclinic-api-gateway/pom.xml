@@ -78,7 +78,7 @@
         <dependency>
             <groupId>io.github.resilience4j</groupId>
             <artifactId>resilience4j-micrometer</artifactId>
-            <version>1.7.5</version>
+            <version>1.7.1</version>
         </dependency>
         <dependency>
             <groupId>io.github.mweirauch</groupId>
@@ -98,17 +98,9 @@
 
         <!-- Third parties -->
         <dependency>
-            <groupId>org.jolokia</groupId>
-            <artifactId>jolokia-core</artifactId>
-        </dependency>
-        <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>io.github.resilience4j</groupId>
-            <artifactId>resilience4j-micrometer</artifactId>
         </dependency>
 
         <!-- Webjars -->

@@ -51,12 +51,6 @@
             <artifactId>spring-boot-admin-server-ui</artifactId>
             <version>${spring-boot-admin.version}</version>
         </dependency>
-
-        <!-- Third-party librairies -->
-        <dependency>
-            <groupId>org.jolokia</groupId>
-            <artifactId>jolokia-core</artifactId>
-        </dependency>
     </dependencies>
 
     <profiles>
