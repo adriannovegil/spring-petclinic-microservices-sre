@@ -39,7 +39,7 @@ import java.util.Optional;
  */
 @RequestMapping("/owners")
 @RestController
-@Timed("petclinic.owner")
+//@Timed("petclinic.owner")
 @RequiredArgsConstructor
 @Slf4j
 class OwnerResource {
@@ -53,14 +53,14 @@ class OwnerResource {
         .distributionStatisticBufferLength(32767)
         .publishPercentileHistogram()
         .register(Metrics.globalRegistry);
-    
+
     /**
      * Create Owner
      */
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Owner createOwner(@Valid @RequestBody Owner owner) {        
-        Timer.Sample methodTimer = Timer.start(Metrics.globalRegistry);                
+    public Owner createOwner(@Valid @RequestBody Owner owner) {
+        Timer.Sample methodTimer = Timer.start(Metrics.globalRegistry);
         Owner localOwner = ownerRepository.save(owner);
         // Export the metric
         methodTimer.stop(totalMethodTimer);
@@ -84,8 +84,8 @@ class OwnerResource {
      */
     @GetMapping
     public List<Owner> findAll() {
-        Timer.Sample methodTimer = Timer.start(Metrics.globalRegistry);     
-        List<Owner> listOwner = ownerRepository.findAll();        
+        Timer.Sample methodTimer = Timer.start(Metrics.globalRegistry);
+        List<Owner> listOwner = ownerRepository.findAll();
         // Export the metric
         methodTimer.stop(totalMethodTimer);
         return listOwner;

@@ -32,7 +32,7 @@ import java.util.Optional;
  * @author Maciej Szarlinski
  */
 @RestController
-@Timed("petclinic.pet")
+//@Timed("petclinic.pet")
 @RequiredArgsConstructor
 @Slf4j
 class PetResource {

@@ -79,7 +79,7 @@
         <!-- Chaos Monkey -->
         <dependency>
             <groupId>de.codecentric</groupId>
-            <artifactId>chaos-monkey-spring-boot</artifactId>
+            <artifactId>chaos-monkey-spring-boot</artifactId>            
         </dependency>
 
         <!-- Third parties -->

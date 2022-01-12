@@ -43,7 +43,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequiredArgsConstructor
 @Slf4j
-@Timed("petclinic.visit")
+//@Timed("petclinic.visit")
 class VisitResource {
 
     private final VisitRepository visitRepository;
