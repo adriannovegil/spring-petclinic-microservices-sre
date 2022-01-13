@@ -30,6 +30,8 @@ import reactor.core.publisher.Mono;
 
 import java.util.function.Function;
 import java.util.stream.Collectors;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @author Maciej Szarlinski
@@ -39,6 +41,8 @@ import java.util.stream.Collectors;
 @RequestMapping("/api/gateway")
 public class ApiGatewayController {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(ApiGatewayController.class);
+
     private final CustomersServiceClient customersServiceClient;
 
     private final VisitsServiceClient visitsServiceClient;
@@ -47,6 +51,9 @@ public class ApiGatewayController {
 
     @GetMapping(value = "owners/{ownerId}")
     public Mono<OwnerDetails> getOwnerDetails(final @PathVariable int ownerId) {
+
+        LOGGER.warn("Log simple. FUCK YEAH!!!!");        
+
         return customersServiceClient.getOwner(ownerId)
                 .flatMap(owner
                         -> visitsServiceClient.getVisitsForPets(owner.getPetIds())

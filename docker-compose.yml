@@ -35,7 +35,9 @@ services:
   customers-service:
     image: springcommunity/spring-petclinic-customers-service
     environment:
-      - SPRING_PROFILES_ACTIVE=docker,chaos-monkey
+      - SPRING_PROFILES_ACTIVE=docker,chaos-monkey,elk
+      - LOGSTASH_HOST=logstash
+      - LOGSTASH_PORT=5044
     depends_on:
       - config-server
       - discovery-server
@@ -52,7 +54,9 @@ services:
   visits-service:
     image: springcommunity/spring-petclinic-visits-service
     environment:
-      - SPRING_PROFILES_ACTIVE=docker,chaos-monkey
+      - SPRING_PROFILES_ACTIVE=docker,chaos-monkey,elk
+      - LOGSTASH_HOST=logstash
+      - LOGSTASH_PORT=5044
     depends_on:
       - config-server
       - discovery-server
@@ -69,7 +73,9 @@ services:
   vets-service:
     image: springcommunity/spring-petclinic-vets-service
     environment:
-      - SPRING_PROFILES_ACTIVE=docker,chaos-monkey
+      - SPRING_PROFILES_ACTIVE=docker,chaos-monkey,elk
+      - LOGSTASH_HOST=logstash
+      - LOGSTASH_PORT=5044
     depends_on:
       - config-server
       - discovery-server
@@ -86,7 +92,9 @@ services:
   api-gateway:
     image: springcommunity/spring-petclinic-api-gateway
     environment:
-      - SPRING_PROFILES_ACTIVE=docker
+      - SPRING_PROFILES_ACTIVE=docker,elk
+      - LOGSTASH_HOST=logstash
+      - LOGSTASH_PORT=5044
     depends_on:
       - config-server
       - discovery-server
