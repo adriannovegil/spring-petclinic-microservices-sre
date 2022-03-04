@@ -52,7 +52,7 @@ public class ApiGatewayController {
     @GetMapping(value = "owners/{ownerId}")
     public Mono<OwnerDetails> getOwnerDetails(final @PathVariable int ownerId) {
 
-        LOGGER.warn("Log simple. FUCK YEAH!!!!");        
+        //LOGGER.warn("Log simple. FUCK YEAH!!!!");
 
         return customersServiceClient.getOwner(ownerId)
                 .flatMap(owner
