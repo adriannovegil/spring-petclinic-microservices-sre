@@ -4,22 +4,22 @@ Following you can read all the information about the chaos experiments defined i
 
 You can execute:
 
-- chaos using shell scripts
-- chaos using Spring Boot Chaos Monkey interacting directly with the framework
+- Chaos using Spring Boot Chaos Monkey interacting directly with the framework
 - Chaos using Chaos Toolkit and Spring Boot Chaos Monkey
+- Chaos using shell scripts
 
 ## 1. Define steady states
 
-Define a metric to check a steady state of your service and of course your entire system. Start small with a service that is not critical.
+Define a metric to check a steady state of your service and of course your entire system. __Start small__ with a service that is not critical.
 
 ## 2. Do not start in production
 
 Of course, you can start in production, but keep in mind…
 
-> The best place on earth is…production!
+> The best place on earth is ... production!
 > Josh Long
 
-…so let’s keep production as the best place on earth and look for our first experiences on another stage. If all goes well, and you’re confident, run it in production.
+... so let’s keep production as the best place on earth and look for our first experiences on another stage. If all goes well, and you’re confident, run it in production.
 
 ## 3. Fire the Chaos Using Spring Boot Chaos Monkey
 
