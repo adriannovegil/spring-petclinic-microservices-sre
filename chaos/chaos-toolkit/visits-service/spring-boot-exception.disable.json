@@ -1,0 +1,45 @@
+{
+  "version": "1.0.0",
+  "title": "Triggering exceptions - Disable Experiment",
+  "description": "Uses the Spring Chaos Monkey to manipulate a service",
+  "tags": [
+    "service",
+    "spring"
+  ],
+  "steady-state-hypothesis": {
+    "probes": [
+      {
+        "name": "api-gateway-must-still-respond",
+        "provider": {
+          "type": "http",
+          "url": "http://localhost:8080",
+          "timeout": [0.25, 0.25]
+        },
+        "tolerance": 200,
+        "type": "probe"
+      }
+    ],
+    "title": "System is healthy"
+  },
+  "contributions": {
+    "reliability": "high",
+    "availability": "high",
+    "security": "none",
+    "scalability": "medium"
+  },
+  "method": [],
+  "rollbacks": [
+    {
+      "name": "disable-chaosmonkey",
+      "type": "action",
+      "provider": {
+        "type": "python",
+        "module": "chaosspring.actions",
+        "func": "disable_chaosmonkey",
+        "arguments": {
+          "base_url": "http://localhost:8082/actuator"
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,95 @@
+{
+  "version": "1.0.0",
+  "title": "Injecting memory application failures",
+  "description": "Uses the Spring Chaos Monkey to manipulate a service",
+  "tags": [
+    "service",
+    "spring"
+  ],
+  "steady-state-hypothesis": {
+    "probes": [
+      {
+        "name": "api-gateway-must-still-respond",
+        "provider": {
+          "type": "http",
+          "url": "http://localhost:8080",
+          "timeout": [0.25, 0.25]
+        },
+        "tolerance": 200,
+        "type": "probe"
+      }
+    ],
+    "title": "System is healthy"
+  },
+  "contributions": {
+    "reliability": "high",
+    "availability": "high",
+    "security": "none",
+    "scalability": "medium"
+  },
+  "method": [
+    {
+      "name": "enable_chaosmonkey",
+      "provider": {
+        "arguments": {
+          "base_url": "http://localhost:8083/actuator"
+        },
+        "func": "enable_chaosmonkey",
+        "module": "chaosspring.actions",
+        "type": "python"
+      },
+      "type": "action"
+    },
+    {
+      "name": "configure_assaults",
+      "provider": {
+        "arguments": {
+          "base_url": "http://localhost:8083/actuator",
+          "assaults_configuration": {
+            "level": 3,
+            "latencyActive": false,
+            "exceptionsActive": false,
+            "killApplicationActive":false,
+            "restartApplicationActive": false,
+            "cpuActive": false,
+            "memoryActive":true,
+            "memoryMillisecondsHoldFilledMemory":90000,
+            "memoryMillisecondsWaitNextIncrease":1000,
+            "memoryFillIncrementFraction": 0.15,
+            "memoryFillTargetFraction": 0.95,
+            "memoryCronExpression": "* * * * * *",
+            "runtimeAssaultCronExpression": "* * * * * *"
+          }
+        },
+        "func": "change_assaults_configuration",
+        "module": "chaosspring.actions",
+        "type": "python"
+      },
+      "type": "action"
+    },
+    {
+      "name": "configure_repository_watcher",
+      "tolerance": 200,
+      "provider": {
+        "type": "http",
+        "url": "http://localhost:8083/actuator/chaosmonkey/watchers",
+        "method": "POST",
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "arguments": {
+          "controller": true,
+          "restController": true,
+          "service": true,
+          "repository": true,
+          "component": false,
+          "restTemplate": false,
+          "webClient": false,
+          "actuatorHealth": false
+        }
+      },
+      "type": "action"
+    }
+  ],
+  "rollbacks": []
+}

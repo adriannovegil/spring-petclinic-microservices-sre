@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "title": "Exploring assumptions if a dependency starts responding slowly",
+  "title": "Injecting memory application failures - Disable Experiment",
   "description": "Uses the Spring Chaos Monkey to manipulate a service",
   "tags": [
     "service",
@@ -29,55 +29,25 @@
   },
   "method": [
     {
-      "name": "enable_chaosmonkey",
-      "provider": {
-        "arguments": {
-          "base_url": "http://localhost:8081/actuator"
-        },
-        "func": "enable_chaosmonkey",
-        "module": "chaosspring.actions",
-        "type": "python"
-      },
-      "type": "action"
-    },
-    {
       "name": "configure_assaults",
       "provider": {
         "arguments": {
-          "base_url": "http://localhost:8081/actuator",
+          "base_url": "http://localhost:8083/actuator",
           "assaults_configuration": {
-            "level": 1,
-            "latencyActive": true,
+            "level": 3,
+            "latencyActive": false,
             "exceptionsActive": false,
-            "killApplicationActive": false,
+            "killApplicationActive":false,
             "restartApplicationActive": false,
-            "latencyRangeStart": 10000,
-            "latencyRangeEnd": 30000
+            "cpuActive": false,
+            "memoryActive":false,
+            "memoryCronExpression": "OFF",
+            "runtimeAssaultCronExpression": "OFF"
           }
         },
         "func": "change_assaults_configuration",
         "module": "chaosspring.actions",
         "type": "python"
-      },
-      "type": "action"
-    },
-    {
-      "name": "configure_repository_watcher",
-      "tolerance": 200,
-      "provider": {
-        "type": "http",
-        "url": "http://localhost:8081/actuator/chaosmonkey/watchers",
-        "method": "POST",
-        "headers": {
-          "Content-Type": "application/json"
-        },
-        "arguments": {
-          "controller": false,
-          "restController": true,
-          "service": false,
-          "repository": false,
-          "component": false
-        }
       },
       "type": "action"
     }
@@ -91,7 +61,7 @@
         "module": "chaosspring.actions",
         "func": "disable_chaosmonkey",
         "arguments": {
-          "base_url": "http://localhost:8081/actuator"
+          "base_url": "http://localhost:8083/actuator"
         }
       }
     }

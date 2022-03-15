@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "title": "Setting and triggering service dependency death",
+  "title": "Triggering custom exceptions",
   "description": "Uses the Spring Chaos Monkey to manipulate a service",
   "tags": [
     "service",
@@ -32,7 +32,7 @@
       "name": "enable_chaosmonkey",
       "provider": {
         "arguments": {
-          "base_url": "http://localhost:8081/actuator"
+          "base_url": "http://localhost:8083/actuator"
         },
         "func": "enable_chaosmonkey",
         "module": "chaosspring.actions",
@@ -44,13 +44,15 @@
       "name": "configure_assaults",
       "provider": {
         "arguments": {
-          "base_url": "http://localhost:8081/actuator",
+          "base_url": "http://localhost:8083/actuator",
           "assaults_configuration": {
-            "level": 1,
+            "level": 5,
             "latencyActive": false,
             "exceptionsActive": true,
             "killApplicationActive": false,
             "restartApplicationActive": false,
+            "cpuActive": false,
+            "memoryActive":false,
             "exception": {
               "type": "java.net.ConnectException",
               "arguments": [
@@ -60,7 +62,7 @@
                 }
               ]
             }
-          },
+          }
         },
         "func": "change_assaults_configuration",
         "module": "chaosspring.actions",
@@ -73,34 +75,24 @@
       "tolerance": 200,
       "provider": {
         "type": "http",
-        "url": "http://localhost:8080/actuator/chaosmonkey/watchers",
+        "url": "http://localhost:8083/actuator/chaosmonkey/watchers",
         "method": "POST",
         "headers": {
           "Content-Type": "application/json"
         },
         "arguments": {
           "controller": false,
-          "restController": false,
+          "restController": true,
           "service": false,
-          "repository": true,
-          "component": false
+          "repository": false,
+          "component": false,
+          "restTemplate": false,
+          "webClient": false,
+          "actuatorHealth": false
         }
       },
       "type": "action"
     }
   ],
-  "rollbacks": [
-    {
-      "name": "disable-chaosmonkey",
-      "type": "action",
-      "provider": {
-        "type": "python",
-        "module": "chaosspring.actions",
-        "func": "disable_chaosmonkey",
-        "arguments": {
-          "base_url": "http://localhost:8081/actuator"
-        }
-      }
-    }
-  ]
+  "rollbacks": []
 }

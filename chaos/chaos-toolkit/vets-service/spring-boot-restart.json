@@ -1,0 +1,79 @@
+{
+    "version": "1.0.0",
+    "title": "Restarting the service",
+    "description": "Can our consumer survive gracefully a provider's failure?",
+    "tags": [
+      "service",
+      "spring"
+    ],
+    "steady-state-hypothesis": {
+      "probes": [
+        {
+          "name": "api-gateway-must-still-respond",
+          "provider": {
+            "type": "http",
+            "url": "http://localhost:8080",
+            "timeout": [0.25, 0.25]
+          },
+          "tolerance": 200,
+          "type": "probe"
+        }
+      ],
+      "title": "System is healthy"
+    },
+    "contributions": {
+      "reliability": "high",
+      "availability": "high",
+      "security": "none",
+      "scalability": "medium"
+    },
+    "method": [
+      {
+        "name": "enable_chaosmonkey",
+        "provider": {
+          "arguments": {
+            "base_url": "http://localhost:8083/actuator"
+          },
+          "func": "enable_chaosmonkey",
+          "module": "chaosspring.actions",
+          "type": "python"
+        },
+        "type": "action"
+      },
+      {
+        "name": "configure_assaults",
+        "provider": {
+            "arguments": {
+                "base_url": "http://localhost:8083/actuator",
+                "assaults_configuration": {
+                    "level": 1,
+                    "latencyActive": false,
+                    "exceptionsActive": false,
+                    "killApplicationActive": false,
+                    "restartApplicationActive": true,
+                    "cpuActive": false,
+                    "memoryActive":false,
+                    "runtimeAssaultCronExpression": "* * * * * *"
+                }
+            },
+            "func": "change_assaults_configuration",
+            "module": "chaosspring.actions",
+            "type": "python"
+          },
+          "type": "action"
+      },
+      {
+        "type": "action",
+        "name": "send-request-once",
+        "provider": {
+            "type": "http",
+            "url": "http://localhost:8080"
+        },
+        "pauses": {
+            "after": 5
+        },
+        "background": true
+      }
+    ],
+    "rollbacks": []
+}
