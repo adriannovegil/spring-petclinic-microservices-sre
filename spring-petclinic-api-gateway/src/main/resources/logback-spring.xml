@@ -6,16 +6,8 @@
     <springProperty scope="context" name="applicationName" source="spring.application.name"/>
     <springProperty scope="context" name="environment" source="spring.profiles.active"/>
 
-    <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
-        <encoder>
-            <pattern>${CONSOLE_LOG_PATTERN}</pattern>
-            <charset>utf8</charset>
-        </encoder>
-    </appender>
-
-    <root level="INFO">
-        <appender-ref ref="console"/>
-    </root>
+    <property name="CONSOLE_LOG_PATTERN"
+      value="${CONSOLE_LOG_PATTERN:-%clr(%d{yyyy-MM-dd HH:mm:ss.SSS}){faint} %clr(${LOG_LEVEL_PATTERN:-%5p}) %clr(${PID:- }){magenta} %clr(---){faint} %clr([%15.15t]){faint} %clr(%-40.40logger{39}){cyan} %clr(:){faint} %m%n${LOG_EXCEPTION_CONVERSION_WORD:-%wEx}}" />
 
     <springProfile name="elk">
         <appender name="logstash" class="net.logstash.logback.appender.LogstashTcpSocketAppender">
@@ -70,8 +62,21 @@
             </encoder>
         </appender>
 
-        <root level="WARN">
+        <root level="INFO">
             <appender-ref ref="logstash"/>
+        </root>
+    </springProfile>
+
+    <springProfile name="!elk">
+        <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+            <encoder>
+                <pattern>${CONSOLE_LOG_PATTERN}</pattern>
+                <charset>utf8</charset>
+            </encoder>
+        </appender>
+
+        <root level="INFO">
+            <appender-ref ref="console"/>
         </root>
     </springProfile>
 
