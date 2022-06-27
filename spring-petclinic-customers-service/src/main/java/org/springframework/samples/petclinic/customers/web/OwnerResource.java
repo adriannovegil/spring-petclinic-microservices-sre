@@ -60,10 +60,10 @@ class OwnerResource {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Owner createOwner(@Valid @RequestBody Owner owner) {
-        Timer.Sample methodTimer = Timer.start(Metrics.globalRegistry);
+        // Timer.Sample methodTimer = Timer.start(Metrics.globalRegistry);
         Owner localOwner = ownerRepository.save(owner);
         // Export the metric
-        methodTimer.stop(totalMethodTimer);
+        // methodTimer.stop(totalMethodTimer);
         return localOwner;
     }
 
@@ -72,10 +72,10 @@ class OwnerResource {
      */
     @GetMapping(value = "/{ownerId}")
     public Optional<Owner> findOwner(@PathVariable("ownerId") int ownerId) {
-        Timer.Sample methodTimer = Timer.start(Metrics.globalRegistry);
+        // Timer.Sample methodTimer = Timer.start(Metrics.globalRegistry);
         Optional<Owner> optionalOwner = ownerRepository.findById(ownerId);
         // Export the metric
-        methodTimer.stop(totalMethodTimer);
+        // methodTimer.stop(totalMethodTimer);
         return optionalOwner;
     }
 
@@ -84,10 +84,10 @@ class OwnerResource {
      */
     @GetMapping
     public List<Owner> findAll() {
-        Timer.Sample methodTimer = Timer.start(Metrics.globalRegistry);
+        // Timer.Sample methodTimer = Timer.start(Metrics.globalRegistry);
         List<Owner> listOwner = ownerRepository.findAll();
         // Export the metric
-        methodTimer.stop(totalMethodTimer);
+        // methodTimer.stop(totalMethodTimer);
         return listOwner;
     }
 
@@ -97,7 +97,7 @@ class OwnerResource {
     @PutMapping(value = "/{ownerId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void updateOwner(@PathVariable("ownerId") int ownerId, @Valid @RequestBody Owner ownerRequest) {
-        Timer.Sample methodTimer = Timer.start(Metrics.globalRegistry);
+        // Timer.Sample methodTimer = Timer.start(Metrics.globalRegistry);
         final Optional<Owner> owner = ownerRepository.findById(ownerId);
         final Owner ownerModel = owner.orElseThrow(() -> new ResourceNotFoundException("Owner "+ownerId+" not found"));
         // This is done by hand for simplicity purpose. In a real life use-case we should consider using MapStruct.
@@ -109,6 +109,6 @@ class OwnerResource {
         log.info("Saving owner {}", ownerModel);
         ownerRepository.save(ownerModel);
         // Export the metric
-        methodTimer.stop(totalMethodTimer);
+        // methodTimer.stop(totalMethodTimer);
     }
 }

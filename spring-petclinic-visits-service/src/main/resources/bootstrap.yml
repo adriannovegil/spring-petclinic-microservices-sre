@@ -1,9 +1,9 @@
 spring:
+  application:
+    name: visits-service
   cloud:
     config:
       uri: http://localhost:8888
-  application:
-    name: visits-service
 ---
 spring:
   config:
@@ -12,3 +12,26 @@ spring:
   cloud:
     config:
       uri: http://config-server:8888
+---
+spring:
+  config:
+    activate:
+      on-profile: kubernetes
+  cloud:
+    config:
+      enabled: false
+    kubernetes:
+      reload:
+        strategy: restart-context
+        enabled: true
+      config:
+        enabled: true
+        name: visits-service
+        namespace: spring-petclinic
+        sources:
+          - name: visits-service
+management:
+  endpoint:
+    restart:
+      enabled: true
+    

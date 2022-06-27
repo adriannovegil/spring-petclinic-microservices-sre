@@ -1,9 +1,9 @@
 spring:
+  application:
+    name: api-gateway
   cloud:
     config:
       uri: http://localhost:8888
-  application:
-    name: api-gateway
 ---
 spring:
   config:
@@ -12,3 +12,25 @@ spring:
   cloud:
     config:
       uri: http://config-server:8888
+---
+spring:
+  config:
+    activate:
+      on-profile: kubernetes
+  cloud:
+    config:
+      enabled: false
+    kubernetes:
+      reload:
+        strategy: restart-context
+        enabled: true
+      config:
+        enabled: true
+        name: api-gateway
+        namespace: spring-petclinic
+        sources:
+          - name: api-gateway
+management:
+  endpoint:
+    restart:
+      enabled: true

@@ -42,7 +42,7 @@ import java.time.Duration;
 /**
  * @author Maciej Szarlinski
  */
-@EnableDiscoveryClient
+//@EnableDiscoveryClient
 @SpringBootApplication
 public class ApiGatewayApplication {
 

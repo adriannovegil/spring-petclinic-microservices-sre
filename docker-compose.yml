@@ -36,7 +36,7 @@ services:
     image: springcommunity/spring-petclinic-customers-service
     environment:
       #- SPRING_PROFILES_ACTIVE=docker,chaos-monkey,elk
-      - SPRING_PROFILES_ACTIVE=docker,chaos-monkey
+      - SPRING_PROFILES_ACTIVE=local,docker,chaos-monkey
       - LOGSTASH_HOST=logstash
       - LOGSTASH_PORT=5044
     depends_on:
@@ -55,7 +55,7 @@ services:
   visits-service:
     image: springcommunity/spring-petclinic-visits-service
     environment:
-      - SPRING_PROFILES_ACTIVE=docker,chaos-monkey,elk
+      - SPRING_PROFILES_ACTIVE=local,docker,chaos-monkey,elk
       #- SPRING_PROFILES_ACTIVE=docker,chaos-monkey
       - LOGSTASH_HOST=logstash
       - LOGSTASH_PORT=5044
@@ -75,7 +75,7 @@ services:
   vets-service:
     image: springcommunity/spring-petclinic-vets-service
     environment:
-      - SPRING_PROFILES_ACTIVE=docker,chaos-monkey,elk
+      - SPRING_PROFILES_ACTIVE=local,docker,chaos-monkey,elk
       #- SPRING_PROFILES_ACTIVE=docker,chaos-monkey
       - LOGSTASH_HOST=logstash
       - LOGSTASH_PORT=5044
@@ -95,7 +95,7 @@ services:
   api-gateway:
     image: springcommunity/spring-petclinic-api-gateway
     environment:
-      - SPRING_PROFILES_ACTIVE=docker,elk
+      - SPRING_PROFILES_ACTIVE=local,docker,elk
       - LOGSTASH_HOST=logstash
       - LOGSTASH_PORT=5044
     depends_on:
@@ -140,6 +140,21 @@ services:
     networks:
       - observabilitysandbox
     restart: always
+    labels:
+      org.label-schema.group: "observability"
+
+  # Container management
+  # ============================================================================
+  # Portainer Docker management service
+  portainer:
+    image: portainer/portainer
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./portainer-data:/data
+    ports:
+      - 9000:9000
+    networks:
+      - observabilitysandbox
     labels:
       org.label-schema.group: "observability"
 

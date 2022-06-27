@@ -26,6 +26,7 @@ HELP_FUN = \
 
 PROJECT_NAME=spring-petclinic-microservices
 COMPOSE_COMMAND=docker-compose --project-name=$(PROJECT_NAME)
+SANDBOX_NETWORK=devsandbox
 DOCKER_NETWORK=observabilitysandbox
 
 .DEFAULT_GOAL:=help
@@ -42,8 +43,7 @@ ifeq ($(shell docker network ls | grep ${DOCKER_NETWORK} | wc -l),0)
 	@docker network create ${DOCKER_NETWORK}
 endif
 
-.PHONY: help build up start stop restart logs status ps down clean
-
+.PHONY: build
 build: ## Build the Docker images
 	@$(COMPOSE_COMMAND) build
 

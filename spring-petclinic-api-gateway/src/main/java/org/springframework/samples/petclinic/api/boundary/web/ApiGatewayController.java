@@ -63,7 +63,6 @@ public class ApiGatewayController {
                         })
                         .map(addVisitsToOwner(owner))
                 );
-
     }
 
     private Function<Visits, OwnerDetails> addVisitsToOwner(OwnerDetails owner) {

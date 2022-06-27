@@ -1,9 +1,9 @@
 spring:
+  application:
+    name: vets-service
   cloud:
     config:
       uri: http://localhost:8888
-  application:
-    name: vets-service
 ---
 spring:
   config:
@@ -12,3 +12,25 @@ spring:
   cloud:
     config:
       uri: http://config-server:8888
+---
+spring:
+  config:
+    activate:
+      on-profile: kubernetes
+  cloud:
+    config:
+      enabled: false
+    kubernetes:
+      reload:
+        strategy: restart-context
+        enabled: true
+      config:
+        enabled: true
+        name: vets-service
+        namespace: spring-petclinic
+        sources:
+          - name: vets-service
+management:
+  endpoint:
+    restart:
+      enabled: true

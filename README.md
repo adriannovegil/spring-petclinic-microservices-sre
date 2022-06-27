@@ -1,56 +1,32 @@
 # Distributed version of the Spring PetClinic Sample Application built with Spring Cloud
 
-*Based on the original [Spring Petclinic microservices](https://github.com/spring-petclinic/spring-petclinic-microservices) repository.*
+*Based on the original [Spring Petclinic Microservices](https://github.com/spring-petclinic/spring-petclinic-microservices) repository and the [Spring Petclinic Microservices CLoud Version](https://github.com/spring-petclinic/spring-petclinic-cloud).*
 
-## Starting services locally without Docker
+This microservices branch was initially derived from [AngularJS version](https://github.com/spring-petclinic/spring-petclinic-angular1) to demonstrate how to split sample Spring application into [microservices](http://www.martinfowler.com/articles/microservices.html). To achieve that goal, we use Spring Cloud Gateway, Spring Cloud Circuit Breaker, Spring Cloud Config, Spring Cloud Sleuth, Resilience4j, Micrometer and the Eureka Service Discovery from the [Spring Cloud Netflix](https://github.com/spring-cloud/spring-cloud-netflix) technology stack.
 
-Every microservice is a Spring Boot application and can be started locally using IDE or `./mvnw spring-boot:run` command.
+## Starting services locally
+
+Every microservice is a Spring Boot application and can be started locally.
 
 Please note that supporting services (__Config and Discovery Server__) must be started before any other application (Customers, Vets, Visits and API).
 
 Startup of __Admin server__ is optional.
 
-## Starting services locally with docker-compose
+### Starting Services Locally without Docker
 
-In order to start entire infrastructure using Docker, you have to build images by executing
+Check the [local.md](./doc/local.md) file in the [doc](./doc) folder
 
-```
-$ ./mvnw clean install -PbuildDocker
-```
+### Starting Services Locally with Docker
 
-from a project root.
+Check the [local-docker.md](./doc/local-docker.md) file in the [doc](./doc) folder
 
-Once images are ready, you can start them with a single command
+### Starting Services Locally with Docker & Docker Compose
 
-```
-make up
-```
+Check the [local-compose.md](./doc/local-compose.md) file in the [doc](./doc) folder
 
-or, if you prefer
+### Starting Services Locally with Kubernetes (Minikube)
 
-```
-docker-compose up
-```
-
-After starting services it takes a while for `API Gateway` to be in sync with service registry, so don't be scared of initial Zuul timeouts.
-
-*NOTE: Under MacOSX or Windows, make sure that the Docker VM has enough memory to run the microservices. The default settings
-are usually not enough and make the `docker-compose up` painfully slow.*
-
-## Services
-
-The following services will be started. Some of them are accessible via web:
-
-| Component                                  | Description                                                 | Port                               |
-| ---------------------------------------    | --------------------------------------------------------    | -------------------------------    |
-| `config-server`                            | Spring config server                                        | [`8888`](http://localhost:8888/)   |
-| `discovery-server`                         | Spring discovery server                                     | [`8761`](http://localhost:8761/)   |
-| `customers-service`                        | Customers service                                           | [`8081`](http://localhost:8081/)   |
-| `visits-service`                           | Visits service                                              | [`8082`](http://localhost:8082/)   |
-| `vets-service`                             | Vets service                                                | [`8083`](http://localhost:8083/)   |
-| `api-gateway`                              | Api Gateway                                                 | [`8080`](http://localhost:8080/)   |
-| `admin-server`                             | Admin server                                                | [`9091`](http://localhost:9091/)   |
-| `load-server`                              | [Load generator based on Artillery](https://artillery.io/)  | N/A                                |
+Check the [local-k8s.md](./doc/local-k8s.md) file in the [doc](./doc) folder
 
 ## Database configuration
 
