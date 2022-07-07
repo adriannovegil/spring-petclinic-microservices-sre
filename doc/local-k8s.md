@@ -26,7 +26,7 @@ minikube dashboard
 
 ## Build the Docker images and push into the docker registry
 
-When using a container or VM driver (all drivers except none), you can reuse the Docker daemon inside minikube cluster. 
+When using a container or VM driver (all drivers except none), you can reuse the Docker daemon inside minikube cluster.
 
 This means you don’t have to build on your host machine and push the image into a docker registry. You can just build inside the same docker daemon as minikube which speeds up local experiments.
 
@@ -46,9 +46,9 @@ docker ps
 
 One of the neat features in Spring Boot 2.3 is that it can leverage [Cloud Native Buildpacks](https://buildpacks.io) and [Paketo Buildpacks](https://paketo.io) to build production-ready images for us.
 
-Since we also configured the `spring-boot-maven-plugin` to use `layers`, we'll get optimized layering of the various components that build our Spring Boot app for optimal image caching. 
+Since we also configured the `spring-boot-maven-plugin` to use `layers`, we'll get optimized layering of the various components that build our Spring Boot app for optimal image caching.
 
-What this means in practice is that if we simple change a line of code in our app, it would only require us to push the layer containing our code and not the entire uber jar. 
+What this means in practice is that if we simple change a line of code in our app, it would only require us to push the layer containing our code and not the entire uber jar.
 
 To build all images and pushing them to your registry, run:
 
@@ -100,19 +100,19 @@ standard (default)   k8s.io/minikube-hostpath   Delete          Immediate       
 
 ```
 
-Deploy the databases. 
+Deploy the databases.
 
 ```bash
 helm repo add bitnami https://charts.bitnami.com/bitnami
 helm repo update
-helm install vets-db-mysql bitnami/mysql --namespace spring-petclinic --version 8.8.8 --set auth.database=service_instance_db
-helm install visits-db-mysql bitnami/mysql --namespace spring-petclinic  --version 8.8.8 --set auth.database=service_instance_db
-helm install customers-db-mysql bitnami/mysql --namespace spring-petclinic  --version 8.8.8 --set auth.database=service_instance_db
+helm install vets-db-mysql bitnami/mysql --namespace spring-petclinic --version 9.2.0 --set auth.database=service_instance_db
+helm install visits-db-mysql bitnami/mysql --namespace spring-petclinic  --version 9.2.0 --set auth.database=service_instance_db
+helm install customers-db-mysql bitnami/mysql --namespace spring-petclinic  --version 9.2.0 --set auth.database=service_instance_db
 ```
 
 ## Deploying the application
 
-Our deployment YAMLs have a placeholder called `REPOSITORY_PREFIX` so we'll be able to deploy the images from any Docker registry. 
+Our deployment YAMLs have a placeholder called `REPOSITORY_PREFIX` so we'll be able to deploy the images from any Docker registry.
 
 Sadly, Kubernetes doesn't support environment variables in the YAML descriptors. We have a small script to do it for us and run our deployments:
 
@@ -157,15 +157,15 @@ kubectl rollout restart deploy visits-service -n spring-petclinic
 
 ## References
 
-- https://github.com/spring-petclinic/spring-petclinic-cloud
-- https://minikube.sigs.k8s.io/docs/handbook/pushing/
-- https://minikube.sigs.k8s.io/docs/handbook/dashboard/
-- https://medium.com/codex/setup-kuberhealthy-with-prometheus-and-grafana-on-minikube-b2f6da21dc2e
-- https://medium.com/@jeanmorais/monitorando-aplica%C3%A7%C3%B5es-spring-boot-de-forma-escal%C3%A1vel-no-kubernetes-com-prometheus-operator-e-326f63bb5b00
-- https://github.com/prometheus-operator/prometheus-operator/blob/main/Documentation/user-guides/getting-started.md
-- https://blog.marcnuri.com/instalar-prometheus-grafana-minikube
-- https://github.com/jeanmorais/springboot-prometheus-k8s-sample
-- https://github.com/thomasdarimont/spring-boot-k8s-example-app-conference
-- https://blog.container-solutions.com/prometheus-operator-beginners-guide
-- https://github.com/loliksamuel/spring-decoupling-dockerized-k8s-hpa/tree/master
-- https://levelup.gitconnected.com/observability-of-springboot-services-in-k8s-with-prometheus-and-grafana-61c4e7a9d814
+- <https://github.com/spring-petclinic/spring-petclinic-cloud>
+- <https://minikube.sigs.k8s.io/docs/handbook/pushing/>
+- <https://minikube.sigs.k8s.io/docs/handbook/dashboard/>
+- <https://medium.com/codex/setup-kuberhealthy-with-prometheus-and-grafana-on-minikube-b2f6da21dc2e>
+- <https://medium.com/@jeanmorais/monitorando-aplica%C3%A7%C3%B5es-spring-boot-de-forma-escal%C3%A1vel-no-kubernetes-com-prometheus-operator-e-326f63bb5b00>
+- <https://github.com/prometheus-operator/prometheus-operator/blob/main/Documentation/user-guides/getting-started.md>
+- <https://blog.marcnuri.com/instalar-prometheus-grafana-minikube>
+- <https://github.com/jeanmorais/springboot-prometheus-k8s-sample>
+- <https://github.com/thomasdarimont/spring-boot-k8s-example-app-conference>
+- <https://blog.container-solutions.com/prometheus-operator-beginners-guide>
+- <https://github.com/loliksamuel/spring-decoupling-dockerized-k8s-hpa/tree/master>
+- <https://levelup.gitconnected.com/observability-of-springboot-services-in-k8s-with-prometheus-and-grafana-61c4e7a9d814>
